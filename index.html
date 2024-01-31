@@ -40,7 +40,14 @@
         Given a set of time intervals in any order, our task is to merge all overlapping 
         intervals into one and output the result which should have only mutually exclusive intervals
       </p>
-     
+      <div class="container"></div>
+      <h5>Merge Intervals</h5>
+    <label for="intervalInput">Enter Intervals (e.g., [1,3], [2,6], [8,10], [15,18]):</label>
+    <input type="text" id="intervalInput" placeholder="Enter intervals">
+    <button type="button" class="btn btn-primary"  onclick="mergeIntervals()">mergeIntervals</button>
+
+    <div id="result"></div>
+
       
     </main>
 
@@ -63,5 +70,6 @@
       </div>
     </footer>
     <script src="assets/js/merge.js"></script>
+    <script src="assets/js/theme.js"></script>
   </body>
 </html>

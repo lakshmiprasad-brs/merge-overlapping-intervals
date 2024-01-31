@@ -1,29 +1,31 @@
-function mergeOverlappingIntervals(intervals) {
-    if (intervals.length <= 1) {
-        return intervals;
+function mergeIntervals() {
+    const input = document.getElementById('intervalInput').value;
+    const intervals = JSON.parse("[" + input + "]");
+    
+    if (!Array.isArray(intervals) || intervals.some(interval => !Array.isArray(interval) || interval.length !== 2)) {
+        alert('Invalid input. Please enter intervals in the format [[start1, end1], [start2, end2], ...]');
+        return;
     }
 
-    // Sort intervals based on start times
     intervals.sort((a, b) => a[0] - b[0]);
 
-    const mergedIntervals = [intervals[0]];
+    const merged = [intervals[0]];
 
     for (let i = 1; i < intervals.length; i++) {
-        const currentInterval = intervals[i];
-        const lastMergedInterval = mergedIntervals[mergedIntervals.length - 1];
+        const [currentStart, currentEnd] = intervals[i];
+        const [lastStart, lastEnd] = merged[merged.length - 1];
 
-        if (currentInterval[0] <= lastMergedInterval[1]) {
-            // Overlapping intervals, merge them
-            lastMergedInterval[1] = Math.max(lastMergedInterval[1], currentInterval[1]);
+        if (currentStart <= lastEnd) {
+            merged[merged.length - 1] = [lastStart, Math.max(lastEnd, currentEnd)];
         } else {
-            mergedIntervals.push(currentInterval);
+            merged.push([currentStart, currentEnd]);
         }
     }
 
-    return mergedIntervals;
+    displayResult(merged);
 }
 
-// Example usage:
-const intervals = [[1, 3], [2, 6], [8, 10], [15, 18]];
-const merged = mergeOverlappingIntervals(intervals);
-console.log(merged);
+function displayResult(result) {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = '<h3>Merged Intervals:</h3>' + JSON.stringify(result);
+}
